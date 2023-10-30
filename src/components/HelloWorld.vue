@@ -7,8 +7,7 @@ const count = ref<number>(0);
 </script>
 
 <template>
-  <h1>dwqdqdwqwd</h1>
-  {{ count }}
+  <h1>水豚豚小天地</h1>
 </template>
 
 <style scoped>
