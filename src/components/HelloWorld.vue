@@ -8,6 +8,7 @@ const count = ref<number>(0);
 
 <template>
   <h1>水豚豚小天地</h1>
+  {{ count }}
 </template>
 
 <style scoped>
