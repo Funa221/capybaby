@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+
+const MenuStatus = ref<boolean>(false);
+
 const openMenu = () => {
     console.log('123');
+    MenuStatus.value = !MenuStatus.value;
 };
 
 
@@ -45,6 +49,19 @@ const MenuItems: MenuItem[] = reactive([
             </ul>
         </div>
     </header>
+
+    <!-- nav app -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-200 h-full w-full flex justify-center items-center lg:hidden"
+        v-show="MenuStatus == true">
+        <button class="absolute left-[calc(100%-70px)] top-[calc(25px/2)]" @click="openMenu()">
+            Ｘ
+        </button>
+        <ul class="text-center">
+            <li class="hover:text-[#125627] mt-3" v-for="Items in MenuItems" :key="(Items as any)">{{ Items.name }}</li>
+            <li class="hover:text-[#125627] mt-3"></li>
+        </ul>
+    </div>
+
 </template>
 
 <style scoped></style>

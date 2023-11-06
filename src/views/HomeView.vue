@@ -4,7 +4,7 @@ import Main from '../components/Main.vue'
 </script>
 
 <template>
-  <Main />
+  <Main class="relative" />
 </template>
 
 <style scoped>
