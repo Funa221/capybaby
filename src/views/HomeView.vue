@@ -1,11 +1,20 @@
 <script setup lang="ts">
+import { onBeforeMount } from "vue"
+import { useRouter, useRoute } from "vue-router"
 import Main from '../components/Main.vue'
 
+const router = useRouter();
+const route = useRoute();
+
+onBeforeMount(async () => {
+  if (route.path === "/") {
+    router.push({ name: 'main' })
+  }
+})
 </script>
 
 <template>
-  <Main class="relative" />
+  <Main />
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

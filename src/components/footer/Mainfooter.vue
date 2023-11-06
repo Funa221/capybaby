@@ -23,7 +23,7 @@ const MenuItems: MenuItem[] = reactive([
 </script>
 
 <template>
-    <footer class="h-[80px] w-full border-y text-[#787878] flex justify-center items-center">
+    <footer class="h-[calc((100vh-74vh)/2)] w-full border-y text-[#787878] flex justify-center items-center bg-slate-50">
 
         <!-- nav -->
         <div class="flex justify-center items-center">

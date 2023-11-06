@@ -31,7 +31,7 @@ const MenuItems: MenuItem[] = reactive([
 </script>
 
 <template>
-    <header class="lg:h-[80px] h-[50px] w-full border-y text-[#787878] grid grid-cols-12">
+    <header class="lg:h-[80px] h-[50px] w-full border-y text-[#787878] grid grid-cols-12 bg-slate-50">
         <!-- logo -->
         <div class="grid col-span-4 justify-center items-center">
             <a class="flex justify-center items-center hover:text-[#125627] p-3">
