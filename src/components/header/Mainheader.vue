@@ -17,11 +17,11 @@ export interface MenuItem {
 const MenuItems: MenuItem[] = reactive([
     {
         name: "Home",
-        route: "",
+        route: "main",
     },
     {
         name: "About",
-        route: "",
+        route: "about",
     },
     {
         name: "Login",
@@ -39,13 +39,15 @@ const MenuItems: MenuItem[] = reactive([
             </a>
         </div>
 
-        <!-- nav -->
+        <!-- nav web-->
         <div class="grid col-span-6 col-start-6 justify-end items-center">
             <button class="lg:hidden flex justify-center items-center hover:text-[#125627] p-3" @click="openMenu()">
                 三
             </button>
             <ul class="hidden lg:flex gap-x-6">
-                <li class="hover:text-[#125627]" v-for="Items in MenuItems" :key="(Items as any)">{{ Items.name }}</li>
+                <li class="hover:text-[#125627]" v-for="Items in MenuItems" :key="(Items as any)">
+                    <router-link :to="Items.route">{{ Items.name }}</router-link>
+                </li>
             </ul>
         </div>
     </header>
@@ -57,11 +59,12 @@ const MenuItems: MenuItem[] = reactive([
             Ｘ
         </button>
         <ul class="text-center">
-            <li class="hover:text-[#125627] mt-3" v-for="Items in MenuItems" :key="(Items as any)">{{ Items.name }}</li>
+            <li class="hover:text-[#125627] mt-3" v-for="Items in MenuItems" :key="(Items as any)">
+                <router-link :to="Items.route">{{ Items.name }}</router-link>
+            </li>
             <li class="hover:text-[#125627] mt-3"></li>
         </ul>
     </div>
-
 </template>
 
 <style scoped></style>
