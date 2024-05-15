@@ -17,7 +17,7 @@ export interface MenuItem {
 const MenuItems: MenuItem[] = reactive([
     {
         name: "Home",
-        route: "main",
+        route: "home",
     },
     {
         name: "About",

@@ -8,7 +8,7 @@ const route = useRoute();
 
 onBeforeMount(async () => {
   if (route.path === "/") {
-    router.push({ name: 'main' })
+    router.push({ name: 'home' })
   }
 })
 </script>
