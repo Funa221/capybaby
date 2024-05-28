@@ -8,7 +8,7 @@ export interface MenuItem {
 
 const MenuItems: MenuItem[] = reactive([
     {
-        name: "FB",
+        name: "DC",
         route: "",
     },
     {
@@ -16,7 +16,7 @@ const MenuItems: MenuItem[] = reactive([
         route: "",
     },
     {
-        name: "IG",
+        name: "YT",
         route: "",
     },
 ]);

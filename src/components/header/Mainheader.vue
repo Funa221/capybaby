@@ -35,7 +35,7 @@ const MenuItems: MenuItem[] = reactive([
         <!-- logo -->
         <div class="grid col-span-4 justify-center items-center">
             <a class="flex justify-center items-center hover:text-[#125627] p-3">
-                QQ
+                
             </a>
         </div>
 
