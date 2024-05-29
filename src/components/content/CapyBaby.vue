@@ -20,6 +20,7 @@ const toPage = (page:any) =>{
 
                 <div class="flex justify-center items-center text-[18px] mt-5 gap-x-6">
                     <button class="bg-gradient-to-t rounded-[15px] p-2 from-[#ffbe4e] hover:from-[#ffab1a] to-[#ffffff] hover:to-[#ffffff]" @click="toPage('mabinogi')" >Mabinogi</button>
+                    <button class="bg-gradient-to-t rounded-[15px] p-2 from-[#ffbe4e] hover:from-[#ffab1a] to-[#ffffff] hover:to-[#ffffff]" @click="toPage('starrail')" >StarRail</button>
                 </div>
             </div>
             <div class="lg:col-span-6 col-span-12 p-5 text-center">

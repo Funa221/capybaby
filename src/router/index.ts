@@ -9,6 +9,7 @@ import HomeView from "../views/HomeView.vue";
 import CapyBaby from "../components/content/CapyBaby.vue";
 import AboutView from "../components/content/AboutView.vue";
 import MabinogiView from "../components/content/MabinogiView.vue";
+import StarRailView from "../components/content/StarRailView.vue";
 
 
 const router = createRouter({
@@ -34,6 +35,11 @@ const router = createRouter({
           name: "mabinogi",
           path: "mabinogi",
           component: MabinogiView,
+        },
+        {
+          name: "starrail",
+          path: "starrail",
+          component: StarRailView,
         },
       ]
     },
