@@ -1,12 +1,9 @@
 <script setup lang="ts">
+import * as Type from '../../assets/type.ts'
 import { reactive } from 'vue';
 
-export interface MenuItem {
-    name: string;
-    route: string;
-}
 
-const MenuItems: MenuItem[] = reactive([
+const MenuItems: Type.MenuItem[] = reactive([
     {
         name: "DC",
         route: "",

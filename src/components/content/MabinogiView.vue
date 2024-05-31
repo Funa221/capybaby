@@ -1,10 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-const roundNum1 = ref<number>();
+import * as Type from '../../assets/type.ts'
+import MabinogiContent from '../contentmore/MabinogiContentView.vue'
+import { useStore } from '../../stores/stores.ts'
 
-function pushbutton() {
-    var randomNumber = Math.floor(Math.random() * 13) + 1;
-    roundNum1.value = randomNumber;
+import { reactive } from 'vue';
+
+const SideItems: Type.SideItems[] = reactive([
+    {
+        name: "隨機數字",
+        route: "",
+    },
+    {
+        name: "轉蛋遊戲",
+        route: "",
+    },
+    {
+        name: "新手問題",
+        route: "",
+    },
+]);
+
+const SideBar = useStore();
+
+// 點選左邊分頁時給數字進行顯示
+const openSideBarNum = (index: number) => {
+    SideBar.setSelectedPage(index);
+    console.log(SideBar.SelectedPage);
 };
 
 </script>
@@ -13,27 +34,18 @@ function pushbutton() {
     <!-- 內容寫裡面 -->
     <section class="min-h-[80vh]">
 
-        <div class="text-[22px] bg-gradient-to-r p-5 from-[#e9f2eb] to-[#c6e1cc]">
+        <div class="text-[22px] grid grid-cols-12  p-5">
 
-            <div class="p-5 text-center">
-                <p>Mabinogi</p>
+            <div class="hidden md:grid col-span-3 bg-[#CCC] text-center rounded-[20px] p-3">
+                <div class="text-[20px] text-md-[16px]" v-for="(item, index) in SideItems" :key="(SideItems as any)"
+                    @click="openSideBarNum(index + 1)">
+                    {{ item.name }}
+                </div>
             </div>
 
-            <div class="p-5">
-                <div class="flex justify-center p-5">
-                    <div class="">
-                        點擊下面的按鈕，小水豚幫你挑1~13隨機數字！
-                    </div>
-                </div>
-
-                <div class="flex justify-center p-5 text-[20px]">
-                    <button v-on:click="pushbutton"
-                        class="bg-[#EE0044] hover:bg-[#ffee00] p-2 rounded-[10px] text-[#fff] hover:text-[#000]">測試</button>
-
-                </div>
-                <div class="flex justify-center text-[20px]">
-                    <div class="p-2">{{ roundNum1 }}</div>
-                </div>
+            <div class="grid col-span-12 md:col-span-9 bg-[#ffffff] text-center rounded-[20px]">
+                <MabinogiContent>
+                </MabinogiContent>
             </div>
 
         </div>
