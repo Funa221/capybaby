@@ -30,11 +30,6 @@ const MenuItems: MenuItem[] = reactive([
         name: "About",
         route: "about",
     },
-    {
-        page: 3,
-        name: "Login",
-        route: "",
-    },
 ]);
 
 
