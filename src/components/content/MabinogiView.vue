@@ -2,6 +2,7 @@
 import * as Type from '../../assets/type.ts'
 import MabinogiContent from '../contentmore/mabinogi/MabinogiContentView.vue'
 import RoundNumView from '../contentmore/mabinogi/RoundNumView.vue'
+import RoundItemsView from '../contentmore/mabinogi/RoundItemsView.vue'
 import { useStore } from '../../stores/stores.ts'
 
 import { reactive } from 'vue';
@@ -12,7 +13,7 @@ const SideItems: Type.SideItems[] = reactive([
         route: "",
     },
     {
-        name: "轉蛋遊戲",
+        name: "轉蛋試抽",
         route: "",
     },
     {
@@ -26,7 +27,7 @@ const SideBar = useStore();
 // 點選左邊分頁時給數字進行顯示
 const openSideBarNum = (index: number) => {
     SideBar.setSelectedPage(index);
-    console.log(SideBar.SelectedPage);
+    // console.log(SideBar.SelectedPage);
 };
 
 </script>
@@ -46,6 +47,8 @@ const openSideBarNum = (index: number) => {
             <div class="grid col-span-12 md:col-span-6 bg-[#ffffff] text-center rounded-[20px]">
                 <RoundNumView v-if="SideBar.SelectedPage == 1">
                 </RoundNumView>
+                <RoundItemsView v-if="SideBar.SelectedPage == 2">
+                </RoundItemsView>
                 <MabinogiContent v-if="SideBar.SelectedPage == 0">
                 </MabinogiContent>
             </div>
