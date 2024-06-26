@@ -1,11 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-const roundNum1 = ref<number>();
-
-function pushbutton() {
-    var randomNumber = Math.floor(Math.random() * 13) + 1;
-    roundNum1.value = randomNumber;
-};
 
 </script>
 

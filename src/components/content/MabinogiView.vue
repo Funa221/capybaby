@@ -16,10 +16,6 @@ const SideItems: Type.SideItems[] = reactive([
         name: "轉蛋試抽",
         route: "",
     },
-    {
-        name: "新手問題",
-        route: "",
-    },
 ]);
 
 const SideBar = useStore();
@@ -37,13 +33,17 @@ const openSideBarNum = (index: number) => {
     <section class="min-h-[80vh]">
 
         <div class="text-[22px] md:grid grid-cols-12  p-5">
-            <div class="md:grid md:col-span-2 md:col-start-2 flex justify-between md:justify-center items-center">
+
+            <!-- 左內容顯示 -->
+            <div class="md:grid md:col-span-2 md:col-start-2 md:row-start-1 flex justify-between md:justify-center items-center md:h-[200px]">
                 <button
-                    class="bg-[#ffffff] hover:bg-[#cbd1cb] hover:text-[#8a857e] text-[#403426] text-center rounded-[20px] p-3 m-3"
+                    class="bg-[#ffffff] hover:bg-[#cbd1cb] hover:text-[#8a857e] text-[#403426] text-center rounded-[20px] p-3 m-3 text-[20px]"
                     v-for="(item, index) in SideItems" :key="(SideItems as any)" @click="openSideBarNum(index + 1)">
                     {{ item.name }}
                 </button>
             </div>
+
+            <!-- 右邊內容顯示 -->
             <div class="grid col-span-12 md:col-span-6 bg-[#ffffff] text-center rounded-[20px]">
                 <RoundNumView v-if="SideBar.SelectedPage == 1">
                 </RoundNumView>

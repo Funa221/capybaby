@@ -9,7 +9,8 @@ export default defineConfig({
     alias: {
       '@': path.resolve(__dirname, 'src')
     }
-  }
+  },
+    base: './',  // 使所有資源相對於當前目錄
 })
 
 
