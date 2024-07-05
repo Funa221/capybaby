@@ -33,12 +33,26 @@ const draw = () => {
   console.log(selectedPrize.value, Probability.value); //log紀錄
 };
 
-
+// 紀錄獎數量
 const SlotteryCount = computed(() => {
   return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'S').length;
 });
+const AlotteryCount = computed(() => {
+  return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'A').length;
+});
+const BlotteryCount = computed(() => {
+  return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'B').length;
+});
+const ClotteryCount = computed(() => {
+  return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'C').length;
+});
 
-
+// 清空紀錄
+const clearlog = () => {
+  prizeHistory.value.length = 0;
+  count.value = 0;
+  selectedPrize.value = '清除記錄了！';
+};
 
 // 抽獎內容機率加總
 const calculateTotalProbability = () => {
@@ -96,12 +110,19 @@ console.log(`總機率: ${totalProbability}`);
       <!-- 歷史紀錄 -->
       <div class="p-3 text-[16px] md:text-[20px]">
 
-        <table class="table-auto w-full border-collapse border-[#123456]">
+        <div class="flex justify-evenly items-center">
+          <div class="text-[#F23005]">
+            S獎：{{ SlotteryCount }}</div>
+          <div class="text-[#9d8160]">
+            A獎：{{ AlotteryCount }}</div>
+          <div class="text-[#857d67]">
+            B獎：{{ BlotteryCount }}</div>
+          <div class="text-[#4a4a4a]">
+            C獎：{{ ClotteryCount }}</div>
+          <button class="p-2 bg-[#a5c7e9] rounded-[10px] text-[16px]" @click="clearlog()">清除紀錄</button>
+        </div>
 
-
-          <caption class="caption-top w-full p-2">
-            S獎：{{ SlotteryCount }}
-          </caption>
+        <table class="table-auto w-full border-collapse border-[#123456] mt-2">
 
           <thead>
             <tr class="text-[#222222]">
