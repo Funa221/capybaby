@@ -11,6 +11,9 @@ export default defineConfig({
     }
   },
     base: './',  // 使所有資源相對於當前目錄
+    build: {
+      outDir: 'dist',  // 打包輸出的目錄
+    },
 })
 
 
