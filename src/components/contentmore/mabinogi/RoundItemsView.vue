@@ -139,10 +139,13 @@ const calculateTotalProbability = () => {
 <template>
   <!-- 選擇 -->
   <section class="flex justify-center items-center">
-    <div class="w-[150px] h-[150px]" @click="selectdraw('蔚藍海洋水手箱子')">
+    <div class="w-[120px] h-[120px]" @click="selectdraw('陰陽之神箱子')">
+      <img src="@/assets/image/box/陰陽之神.png" alt="">
+    </div>
+    <div class="w-[120px] h-[120px]" @click="selectdraw('蔚藍海洋水手箱子')">
       <img src="@/assets/image/box/蔚藍海洋.png" alt="">
     </div>
-    <div class="w-[150px] h-[150px]" @click="selectdraw('偶像星辰箱子')">
+    <div class="w-[120px] h-[120px]" @click="selectdraw('偶像星辰箱子')">
       <img src="@/assets/image/box/偶像星辰.png" alt="">
     </div>
   </section>
