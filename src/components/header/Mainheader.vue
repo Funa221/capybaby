@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import * as Type from '../../assets/type.ts'
 import { useStore } from '../../stores/stores';
 
-import { reactive } from 'vue';
+import { reactive, watch } from 'vue';
 
 const SideBar = useStore();
 
@@ -10,16 +11,10 @@ const openMenu = () => {
 };
 
 const isMenuX = () => {
-        SideBar.isMenuOpen = false;
-    };
+    SideBar.isMenuOpen = false;
+};
 
-export interface MenuItem {
-    page: number;
-    name: string;
-    route: string;
-}
-
-const MenuItems: MenuItem[] = reactive([
+const MenuItems: Type.MenuItem[] = reactive([
     {
         page: 1,
         name: "Home",
@@ -30,11 +25,18 @@ const MenuItems: MenuItem[] = reactive([
         name: "About",
         route: "about",
     },
+    {
+        page: 3,
+        name: "Mabinogi",
+        route: "mabinogi",
+    },
 ]);
 
-
-
-
+// 開關菜單取消滑動
+watch(() => SideBar.isMenuOpen, (newVal) => {
+    document.body.classList.toggle('overflow-hidden', newVal);
+    document.body.classList.toggle('overflow-auto', !newVal);
+});
 
 </script>
 
@@ -49,6 +51,7 @@ const MenuItems: MenuItem[] = reactive([
 
         <!-- nav web-->
         <div class="grid col-span-6 col-start-6 justify-end items-center">
+            <!--  -->
             <button class="lg:hidden flex justify-center items-center hover:text-[#125627] p-3" @click="openMenu()">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                     xmlns="http://www.w3.org/2000/svg">
@@ -56,6 +59,7 @@ const MenuItems: MenuItem[] = reactive([
                     </path>
                 </svg>
             </button>
+            <!--  -->
             <ul class="hidden lg:flex gap-x-6">
                 <li class="hover:text-[#125627]" v-for="Items in MenuItems" :key="(Items as any)">
                     <router-link :to="Items.route">{{ Items.name }}</router-link>
@@ -65,21 +69,27 @@ const MenuItems: MenuItem[] = reactive([
     </header>
 
     <!-- nav app -->
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-200 h-full w-full flex justify-center items-center lg:hidden"
+    <div class="fixed top-0 left-0 h-full w-full flex justify-center items-center lg:hidden"
         v-show="SideBar.isMenuOpen">
-        <button class="absolute left-[82%] top-[calc(25px/2)]" @click="openMenu()">
-            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+        <div class="absolute top-0 left-0 h-full w-full bg-slate-50 backdrop-blur-md bg-opacity-75"></div>
+        <!-- X -->
+        <button class="absolute top-2 right-8 hover:text-[#125627] text-[#5f5f5f] p-3" @click="openMenu()">
+            <svg class="w-10 h-10" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
             </svg>
         </button>
-        <ul class="text-center">
-            <li class="hover:text-[#125627] mt-3" v-for="Items in MenuItems" :key="(Items as any)">
+
+        <!--  -->
+        <ul class="text-center z-10">
+            <li class="hover:text-[#125627] text-[#5f5f5f] text-[18px] font-bold p-2" v-for="Items in MenuItems" :key="(Items as any)">
                 <router-link :to="Items.route" @click.native="isMenuX">{{ Items.name }}</router-link>
             </li>
             <li class="hover:text-[#125627] mt-3"></li>
         </ul>
+
     </div>
+
 </template>
 
 <style scoped></style>

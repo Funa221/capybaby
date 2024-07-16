@@ -138,17 +138,21 @@ const calculateTotalProbability = () => {
 
 <template>
   <!-- 選擇 -->
-  <section class="flex justify-center items-center">
-    <div class="w-[120px] h-[120px]" @click="selectdraw('陰陽之神箱子')">
+  <section class="flex flex-wrap justify-center gap-2 p-2">
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('陰陽之神箱子')">
       <img src="@/assets/image/box/陰陽之神.png" alt="">
     </div>
-    <div class="w-[120px] h-[120px]" @click="selectdraw('蔚藍海洋水手箱子')">
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('蔚藍海洋水手箱子')">
       <img src="@/assets/image/box/蔚藍海洋.png" alt="">
     </div>
-    <div class="w-[120px] h-[120px]" @click="selectdraw('偶像星辰箱子')">
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('偶像星辰箱子')">
       <img src="@/assets/image/box/偶像星辰.png" alt="">
     </div>
   </section>
+
 
   <!-- 抽獎 -->
   <section class="flex justify-center items-center p-3 ">
@@ -159,7 +163,7 @@ const calculateTotalProbability = () => {
 
       <div class="flex justify-center gap-4">
         <button
-          class="text-center p-2 w-[20%] lg:w-[13%] rounded-[13px] bg-[#f3c0c0] hover:bg-[#dab8b8] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
+          class="text-center p-1 w-[20%] lg:w-[13%] rounded-[13px] bg-[#f3c0c0] hover:bg-[#dab8b8] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
           @click="draw()">按我</button>
 
         <!-- <button
@@ -177,8 +181,8 @@ const calculateTotalProbability = () => {
       <div class="p-3 text-[16px] md:text-[20px]">
 
         <!-- Object.entries(totalProbabilityByLevel) -->
-        <span class="md:text-[16px] text-[14px]  text-[#898989]"
-          v-for="(probability, level) in totalProbabilityByLevel" :key="level">
+        <span class="md:text-[16px] text-[14px]  text-[#898989]" v-for="(probability, level) in totalProbabilityByLevel"
+          :key="level">
           {{ level }}：{{ probability }}％&nbsp;
         </span>
 
@@ -210,20 +214,20 @@ const calculateTotalProbability = () => {
           <tr class=" text-[#555555]" v-for="(prizeItems, index) in prizeHistory" :key="index">
             <!-- 獎品等級 -->
             <td :class="{
-      'rainbow': prizeItems.level === 'S',
-      'text-[#ea67f4]': prizeItems.level === 'A',
-      'text-[#54b16e]': prizeItems.level === 'B',
-      'text-[#867d7d]': prizeItems.level === 'C'
-    }" class="border border-slate-300  p-1">{{
-      prizeItems.level
-    }}</td>
-            <!-- 獎品名稱 -->
-            <td :class="{
-        'rainbow font-bold': prizeItems.level === 'S',
+        'rainbow': prizeItems.level === 'S',
         'text-[#ea67f4]': prizeItems.level === 'A',
         'text-[#54b16e]': prizeItems.level === 'B',
         'text-[#867d7d]': prizeItems.level === 'C'
-      }" class="border border-slate-300">{{ prizeItems.name }}
+      }" class="border border-slate-300  p-1">{{
+        prizeItems.level
+      }}</td>
+            <!-- 獎品名稱 -->
+            <td :class="{
+          'rainbow font-bold': prizeItems.level === 'S',
+          'text-[#ea67f4]': prizeItems.level === 'A',
+          'text-[#54b16e]': prizeItems.level === 'B',
+          'text-[#867d7d]': prizeItems.level === 'C'
+        }" class="border border-slate-300">{{ prizeItems.name }}
             </td>
             <!-- 獎品機率 -->
             <td class="border border-slate-300">{{ prizeItems.probability.toFixed(4) }}</td>
