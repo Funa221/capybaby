@@ -178,12 +178,12 @@ const calculateTotalProbability = () => {
       <hr>
 
       <!-- 歷史紀錄 -->
-      <div class="p-3 text-[16px] md:text-[20px]">
+      <div class="p-3 md:text-[16px] text-[14px]">
 
         <!-- Object.entries(totalProbabilityByLevel) -->
-        <span class="md:text-[16px] text-[14px]  text-[#898989]" v-for="(probability, level) in totalProbabilityByLevel"
+        <span class="md:text-[14px] text-[12px]  text-[#898989]" v-for="(probability, level) in totalProbabilityByLevel"
           :key="level">
-          {{ level }}：{{ probability }}％&nbsp;
+          {{ level }}：{{ probability }}％&nbsp;&nbsp;
         </span>
 
         <div class="flex justify-evenly items-center">
@@ -196,7 +196,7 @@ const calculateTotalProbability = () => {
           <div class="text-[#867d7d]">
             C獎：{{ ClotteryCount }}</div>
           <button
-            class="p-2 bg-[#a5c7e9] hover:bg-[#9cb3cb] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] rounded-[10px] text-[16px] text-[#2e2a3f] w-[17%] lg:w-[13%]"
+            class="p-1 bg-[#a5c7e9] hover:bg-[#9cb3cb] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] rounded-[10px] text-[16px] text-[#2e2a3f] w-[17%] lg:w-[13%]"
             @click="clearlog()">清除</button>
         </div>
 
@@ -204,9 +204,9 @@ const calculateTotalProbability = () => {
 
           <thead>
             <tr class="text-[#222222]">
-              <th class="border border-slate-300">等級</th>
-              <th class="border border-slate-300">名稱</th>
-              <th class="border border-slate-300">機率</th>
+              <th class="border border-slate-300 w-1/6">等級</th>
+              <th class="border border-slate-300 w-1/2">名稱</th>
+              <th class="border border-slate-300 w-1/6">機率</th>
             </tr>
           </thead>
 
