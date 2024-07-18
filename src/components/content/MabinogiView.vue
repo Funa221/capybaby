@@ -3,6 +3,7 @@ import * as Type from '../../assets/type.ts'
 import MabinogiContent from '../contentmore/mabinogi/MabinogiContentView.vue'
 import RoundNumView from '../contentmore/mabinogi/RoundNumView.vue'
 import RoundItemsView from '../contentmore/mabinogi/RoundItemsView.vue'
+import RoundEchstone from '../contentmore/mabinogi/RoundEchstone.vue'
 import { useStore } from '../../stores/stores.ts'
 
 import { reactive } from 'vue';
@@ -10,6 +11,10 @@ import { reactive } from 'vue';
 const SideItems: Type.SideItems[] = reactive([
     {
         name: "轉蛋試抽",
+        route: "",
+    },
+    {
+        name: "回音覺醒",
         route: "",
     },
     {
@@ -29,7 +34,7 @@ const openSideBarNum = (index: number) => {
 
 <template>
     <!-- 內容寫裡面 -->
-    <section class="min-h-[80vh]">
+    <section class="min-h-[77vh]">
 
         <div class="text-[22px] md:grid grid-cols-12 ps-5 pe-5 md:p-5">
 
@@ -46,7 +51,9 @@ const openSideBarNum = (index: number) => {
             <div class="grid col-span-12 md:col-span-6 bg-[#ffffff] text-center rounded-[20px]">
                 <RoundItemsView v-if="SideBar.SelectedPage == 1">
                 </RoundItemsView>
-                <RoundNumView v-if="SideBar.SelectedPage == 2">
+                <RoundEchstone v-if="SideBar.SelectedPage == 2">
+                </RoundEchstone>
+                <RoundNumView v-if="SideBar.SelectedPage == 3">
                 </RoundNumView>
                 <MabinogiContent v-if="SideBar.SelectedPage == 0">
                 </MabinogiContent>

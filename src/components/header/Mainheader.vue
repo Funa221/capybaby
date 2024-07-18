@@ -27,6 +27,11 @@ const MenuItems: Type.MenuItem[] = reactive([
     },
     {
         page: 3,
+        name: "Login",
+        route: "login",
+    },
+    {
+        page: 4,
         name: "Mabinogi",
         route: "mabinogi",
     },
@@ -82,8 +87,8 @@ watch(() => SideBar.isMenuOpen, (newVal) => {
 
         <!--  -->
         <ul class="text-center z-10">
-            <li class="hover:text-[#125627] text-[#5f5f5f] text-[18px] font-bold p-2" v-for="Items in MenuItems" :key="(Items as any)">
-                <router-link :to="Items.route" @click.native="isMenuX">{{ Items.name }}</router-link>
+            <li class="p-2" v-for="Items in MenuItems" :key="(Items as any)">
+                <router-link class="hover:text-[#125627] text-[#5f5f5f] text-[18px] font-bold p-2" :to="Items.route" @click.native="isMenuX">{{ Items.name }}</router-link>
             </li>
             <li class="hover:text-[#125627] mt-3"></li>
         </ul>

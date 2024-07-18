@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 
 // 動態導入所有 JSON 檔案
 const jsonModules = import.meta.glob('../../../assets/JSON/*.json');
@@ -10,21 +10,8 @@ const Itemslevel = ref<string>('');//獎品等級
 const count = ref<number>(0);//點擊次數
 const prizeHistory = ref<any>([]);//陣列，點擊紀錄
 const currentPrizes = ref<{ level: string; name: string; probability: number }[]>([]);
-const totalProbabilityByLevel = ref({});
+const totalProbability = ref<number>();
 
-// 紀錄獎數量
-const SlotteryCount = computed(() => {
-  return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'S').length;
-});
-const AlotteryCount = computed(() => {
-  return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'A').length;
-});
-const BlotteryCount = computed(() => {
-  return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'B').length;
-});
-const ClotteryCount = computed(() => {
-  return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'C').length;
-});
 
 // 動態加載 JSON 檔案
 const loadPrizes = async (fileName: any) => {
@@ -50,24 +37,18 @@ const selectdraw = async (selection: any) => {
 
   selectedPrize.value = selection;
 
-  // 計算各個等級加起來的總機率
-  const probabilityByLevel = <any>{};
-  for (let prize of currentPrizes.value) {
-    if (!probabilityByLevel[prize.level]) {
-      probabilityByLevel[prize.level] = 0;
+  // 抽獎內容機率加總
+  const calculateTotalProbability = () => {
+    let totalProbability = 0;
+    for (let prize of currentPrizes.value) {
+      totalProbability += prize.probability;
     }
-    // 将每个概率四舍五入到四位小数，并转换为字符串输出
-    probabilityByLevel[prize.level] += Number(prize.probability.toFixed(4));
-  }
-  // 将结果转换为四位小数的字符串
-  for (let level in probabilityByLevel) {
-    probabilityByLevel[level] = probabilityByLevel[level].toFixed(4);
-  }
-  totalProbabilityByLevel.value = probabilityByLevel;
+    return totalProbability;
+  };
 
   // 總機率
-  const totalProbability = calculateTotalProbability();
-  console.log(`總機率: ${totalProbability.toFixed(4)}`);
+  totalProbability.value = calculateTotalProbability();
+  console.log(`總機率: ${totalProbability.value.toFixed(4)}`);
 
 };
 
@@ -101,14 +82,6 @@ const clearlog = () => {
   selectedPrize.value = '清除記錄了！';
 };
 
-// 抽獎內容機率加總
-const calculateTotalProbability = () => {
-  let totalProbability = 0;
-  for (let prize of currentPrizes.value) {
-    totalProbability += prize.probability;
-  }
-  return totalProbability;
-};
 
 </script>
 
@@ -138,18 +111,10 @@ const calculateTotalProbability = () => {
 
 <template>
   <!-- 選擇 -->
-  <section class="flex flex-wrap justify-center gap-2 p-2">
+  <section class="flex flex-wrap justify-center gap-2 mt-5">
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('陰陽之神箱子')">
-      <img src="@/assets/image/box/陰陽之神.png" alt="">
-    </div>
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('蔚藍海洋水手箱子')">
-      <img src="@/assets/image/box/蔚藍海洋.png" alt="">
-    </div>
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('偶像星辰箱子')">
-      <img src="@/assets/image/box/偶像星辰.png" alt="">
+      @click="selectdraw('藍色回音石')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/藍色回音石.png" alt="">
     </div>
   </section>
 
@@ -166,9 +131,6 @@ const calculateTotalProbability = () => {
           class="text-center text-[18px] lg:text-[20px] p-1 w-[20%] lg:w-[13%] rounded-[13px] bg-[#f3c0c0] hover:bg-[#dab8b8] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
           @click="draw()">按我</button>
 
-        <!-- <button
-          class="text-center p-2 w-[20%] lg:w-[13%] rounded-[13px] bg-[#c0f3ce] hover:bg-[#b8dac1] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
-          @click="draw()">內容</button> -->
       </div>
 
       <div class="p-3 text-[16px]">
@@ -181,20 +143,11 @@ const calculateTotalProbability = () => {
       <div class="p-3 md:text-[16px] text-[14px]">
 
         <!-- Object.entries(totalProbabilityByLevel) -->
-        <span class="md:text-[14px] text-[12px]  text-[#898989]" v-for="(probability, level) in totalProbabilityByLevel"
-          :key="level">
-          {{ level }}：{{ probability }}％&nbsp;&nbsp;
+        <span class="md:text-[14px] text-[12px]  text-[#898989]">
+          {{ totalProbability }}
         </span>
 
         <div class="flex justify-evenly items-center">
-          <div class="text-[#F23005]">
-            S獎：{{ SlotteryCount }}</div>
-          <div class="text-[#ea67f4]">
-            A獎：{{ AlotteryCount }}</div>
-          <div class="text-[#54b16e]">
-            B獎：{{ BlotteryCount }}</div>
-          <div class="text-[#867d7d]">
-            C獎：{{ ClotteryCount }}</div>
           <button
             class="p-1 bg-[#a5c7e9] hover:bg-[#9cb3cb] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] rounded-[10px] text-[16px] text-[#2e2a3f] w-[17%] lg:w-[13%]"
             @click="clearlog()">清除</button>
@@ -230,7 +183,7 @@ const calculateTotalProbability = () => {
         }" class="border border-slate-300">{{ prizeItems.name }}
             </td>
             <!-- 獎品機率 -->
-            <td class="border border-slate-300">{{ prizeItems.probability.toFixed(4) }}</td>
+            <td class="border border-slate-300">{{ prizeItems.probability.toFixed(2) }}</td>
           </tr>
         </table>
       </div>

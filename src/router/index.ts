@@ -10,7 +10,7 @@ import HomeView from "../views/HomeView.vue";
 import CapyBaby from "../components/content/CapyBaby.vue";
 import AboutView from "../components/content/AboutView.vue";
 import MabinogiView from "../components/content/MabinogiView.vue";
-import StarRailView from "../components/content/StarRailView.vue";
+import LoginView from "../components/content/LoginView.vue";
 import { useStore } from "../stores/stores";
 
 import { watch } from "vue";
@@ -37,9 +37,9 @@ const routes: Array<RouteRecordRaw> = [
         component: MabinogiView,
       },
       {
-        name: "starrail",
-        path: "starrail",
-        component: StarRailView,
+        name: "login",
+        path: "login",
+        component: LoginView,
       },
     ],
   }];
