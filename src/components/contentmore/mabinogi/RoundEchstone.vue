@@ -4,14 +4,16 @@ import { ref } from 'vue';
 // 動態導入所有 JSON 檔案
 const jsonModules = import.meta.glob('../../../assets/JSON/*.json');
 
-const selectedPrize = ref<any>('先點圖片！再點按我！');
-const Probability = ref<number>();//機率
-const Itemslevel = ref<string>('');//獎品等級
-const count = ref<number>(0);//點擊次數
-const prizeHistory = ref<any>([]);//陣列，點擊紀錄
+const ItemsText = ref<any>('先點圖片！再點按我！'); //獎品文字
+const ItemsProbability = ref<number>(); // 獎品機率
+const Itemslevel = ref<string>(''); // 獎品等級
+const isHighestLevel = ref<boolean>(false); // 是否是最高等級
+const count = ref<number>(0); // 點擊次數
+const prizeHistory = ref<any>([]); // 陣列，點擊紀錄
 const currentPrizes = ref<{ level: string; name: string; probability: number }[]>([]);
 const totalProbability = ref<number>();
-
+const useAdvancedItem = ref<boolean>(false); // 使用高級物品
+const usePremiumItem = ref<boolean>(false); // 使用優質物品
 
 // 動態加載 JSON 檔案
 const loadPrizes = async (fileName: any) => {
@@ -31,55 +33,117 @@ const loadPrizes = async (fileName: any) => {
   }
 };
 
-// 根據用戶選擇動態設置當前獎品列表
-const selectdraw = async (selection: any) => {
+
+// 設置當前獎品列表
+const selectdraw = async (selection: string) => {
   currentPrizes.value = await loadPrizes(selection);
-
-  selectedPrize.value = selection;
-
-  // 抽獎內容機率加總
-  const calculateTotalProbability = () => {
-    let totalProbability = 0;
-    for (let prize of currentPrizes.value) {
-      totalProbability += prize.probability;
-    }
-    return totalProbability;
-  };
-
-  // 總機率
   totalProbability.value = calculateTotalProbability();
   console.log(`總機率: ${totalProbability.value.toFixed(4)}`);
-
+};
+// 計算總機率
+const calculateTotalProbability = () => {
+  return currentPrizes.value.reduce((sum, prize) => sum + prize.probability, 0);
 };
 
-// 抽獎設定
-const draw = () => {
+const draw = async () => {
+
+  // 是否使用高、優物品
+  const adjustedPrizes = adjustProbabilities(currentPrizes.value);
+  // 處理過後的機率進行抽取
+  const selectedPrize = selectPrize(adjustedPrizes);
+
+  if (selectedPrize) {
+
+    // 拿取等級分類
+    const levelType = determineLevelType(selectedPrize.level);
+    // json表
+    const levels = await loadPrizes('回音石個數等級機率');
+    // 兩者丟進去，抽出來的等級
+    const selectedLevel = getLevelByType(levels, levelType);
+
+    ItemsText.value = selectedPrize.name;
+    ItemsProbability.value = selectedPrize.adjustedProbability;
+    Itemslevel.value = selectedLevel;
+    isHighestLevel.value = checkIfHighestLevel(selectedPrize.level, selectedLevel);
+
+    prizeHistory.value.unshift({
+      level: selectedLevel,
+      name: selectedPrize.name,
+      probability: selectedPrize.adjustedProbability,
+      isHighestLevel: isHighestLevel.value
+    });
+    count.value++; // 點擊次數增加
+  };
+}
+
+// 調整機率
+const adjustProbabilities = (prizes: { level: string; name: string; probability: number }[]) => {
+  return prizes.map(prize => {
+    let adjustedProbability = prize.probability;
+    if (useAdvancedItem.value) {
+      adjustedProbability *= 1.15;
+    } else if (usePremiumItem.value) {
+      adjustedProbability *= 1.20;
+    }
+    return { ...prize, adjustedProbability };
+  });
+};
+
+// 選擇獎品
+const selectPrize = (prizes: { level: string; name: string; adjustedProbability: number }[]) => {
   let cumulativeProbability = 0;
-  const random = Math.random() * 100;//因為機率是百分比形式
-  for (let prize of currentPrizes.value) {
-    cumulativeProbability += prize.probability;
+  const random = Math.random() * 100;
+  for (const prize of prizes) {
+    cumulativeProbability += prize.adjustedProbability;
     if (random < cumulativeProbability) {
-      selectedPrize.value = prize.name;
-      Probability.value = prize.probability;
-      Itemslevel.value = prize.level;
-      prizeHistory.value.unshift({
-        level: prize.level,
-        name: prize.name,
-        probability: prize.probability
-      });
-      // 將抽中的獎品添加到歷史記錄中,
-      // .push加在後面,則.unshift是在前面增加
-      break;
+      return prize;
     }
   }
-  count.value++; //點擊次數增加
+  return null;
+};
+
+// 判斷等級類型
+const determineLevelType = (levelRange: string) => {
+  if (levelRange.includes('1~20')) return 'NumTwenty';
+  if (levelRange.includes('1~10')) return 'NumTen';
+  if (levelRange.includes('1~6')) return 'NumSix';
+  if (levelRange.includes('1~5')) return 'NumFive';
+  if (levelRange.includes('1~3')) return 'NumThree';
+  if (levelRange.includes('1')) return 'NumOne';
+  return null;
+};
+
+// 根據類型選擇等級
+const getLevelByType = (levels: any, type: any) => {
+  const levelData = levels.find((level: any) => level.type === type);
+  return levelData ? getRandomItem(levelData.levels).level : null;
+};
+
+// 根據機率隨機選擇一個項目
+const getRandomItem = (items: any) => {
+  const totalProbability = items.reduce((sum: number, item: any) => sum + item.probability, 0);
+  let randomValue = Math.random() * totalProbability;
+  for (let item of items) {
+    randomValue -= item.probability;
+    if (randomValue <= 0) {
+      return item;
+    }
+  }
+  return null;
+};
+
+// 判斷是否為最高等級
+const checkIfHighestLevel = (levelRange: string, selectedLevel: string) => {
+  const maxLevel = levelRange.split('~').pop();
+  return selectedLevel === maxLevel;
 };
 
 // 清空紀錄
 const clearlog = () => {
   prizeHistory.value.length = 0;
   count.value = 0;
-  selectedPrize.value = '清除記錄了！';
+  ItemsText.value = '清除記錄了！';
+  Itemslevel.value = '';
 };
 
 
@@ -116,14 +180,51 @@ const clearlog = () => {
       @click="selectdraw('藍色回音石')">
       <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/藍色回音石.png" alt="">
     </div>
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('紅色回音石')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/紅色回音石.png" alt="">
+    </div>
+
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('黃色回音石')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/黃色回音石.png" alt="">
+    </div>
+
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('銀色回音石')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/銀色回音石.png" alt="">
+    </div>
+
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('黑色回音石')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/黑色回音石.png" alt="">
+    </div>
+
+
+    <!-- 選擇是否使用高級或優質物品 -->
+    <!-- <div class="text-[14px] flex justify-center items-center">
+      <label>
+        <input type="checkbox" v-model="useAdvancedItem" /> 高級
+      </label>
+      <label>
+        <input type="checkbox" v-model="usePremiumItem" /> 優質
+      </label>
+    </div> -->
   </section>
 
 
   <!-- 抽獎 -->
   <section class="flex justify-center items-center p-3 ">
     <div class="w-[100%]">
-      <div class="p-3 text-[16px] lg:text-[20px]">
-        <span :class="Itemslevel === 'S' ? 'rainbow font-bold' : ''">{{ selectedPrize }}</span>
+
+      <div class="p-3 text-[16px] lg:text-[20px]" :class="isHighestLevel ? 'rainbow font-bold' : ''" >
+        <!-- 抽取物 -->
+        <span>
+          {{ ItemsText }}
+          <span v-if="Itemslevel" class="text-[#fa3636] font-bold">
+            {{ Itemslevel }} </span>
+          <span v-if="Itemslevel"> 等級</span>
+        </span>
       </div>
 
       <div class="flex justify-center gap-4">
@@ -144,7 +245,7 @@ const clearlog = () => {
 
         <!-- Object.entries(totalProbabilityByLevel) -->
         <span class="md:text-[14px] text-[12px]  text-[#898989]">
-          {{ totalProbability }}
+          {{ totalProbability?.toFixed(2) }}
         </span>
 
         <div class="flex justify-evenly items-center">
@@ -157,33 +258,24 @@ const clearlog = () => {
 
           <thead>
             <tr class="text-[#222222]">
-              <th class="border border-slate-300 w-1/6">等級</th>
               <th class="border border-slate-300 w-1/2">名稱</th>
-              <th class="border border-slate-300 w-1/6">機率</th>
+              <th class="border border-slate-300 w-1/6">等級</th>
             </tr>
           </thead>
 
           <!--  -->
           <tr class=" text-[#555555]" v-for="(prizeItems, index) in prizeHistory" :key="index">
+            <!-- 獎品名稱 -->
+            <td :class="{
+        'rainbow font-bold': prizeItems.isHighestLevel,
+      }" class="border border-slate-300">{{ prizeItems.name }}
+            </td>
             <!-- 獎品等級 -->
             <td :class="{
-        'rainbow': prizeItems.level === 'S',
-        'text-[#ea67f4]': prizeItems.level === 'A',
-        'text-[#54b16e]': prizeItems.level === 'B',
-        'text-[#867d7d]': prizeItems.level === 'C'
+        'rainbow': prizeItems.isHighestLevel,
       }" class="border border-slate-300  p-1">{{
         prizeItems.level
       }}</td>
-            <!-- 獎品名稱 -->
-            <td :class="{
-          'rainbow font-bold': prizeItems.level === 'S',
-          'text-[#ea67f4]': prizeItems.level === 'A',
-          'text-[#54b16e]': prizeItems.level === 'B',
-          'text-[#867d7d]': prizeItems.level === 'C'
-        }" class="border border-slate-300">{{ prizeItems.name }}
-            </td>
-            <!-- 獎品機率 -->
-            <td class="border border-slate-300">{{ prizeItems.probability.toFixed(2) }}</td>
           </tr>
         </table>
       </div>

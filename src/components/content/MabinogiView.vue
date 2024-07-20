@@ -39,9 +39,9 @@ const openSideBarNum = (index: number) => {
         <div class="text-[22px] md:grid grid-cols-12 ps-5 pe-5 md:p-5">
 
             <!-- 左內容顯示 -->
-            <div class="md:grid md:col-span-2 md:col-start-2 md:row-start-1 flex justify-between md:justify-center items-center md:h-[200px]">
+            <div class="md:grid md:col-span-2 md:col-start-2 md:row-start-1 flex justify-between md:justify-center items-center md:h-[200px] m-3 gap-5">
                 <button
-                    class="bg-[#ffffff] hover:bg-[#cbd1cb] text-[#403426] text-center rounded-[20px] p-3 m-3 text-[18px] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)]"
+                    class="bg-[#ffffff] hover:bg-[#cbd1cb] text-[#403426] text-center rounded-[20px] p-3 text-[16px] lg:text-[18px] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)]"
                     v-for="(item, index) in SideItems" :key="(SideItems as any)" @click="openSideBarNum(index + 1)">
                     {{ item.name }}
                 </button>

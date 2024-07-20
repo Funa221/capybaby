@@ -86,12 +86,12 @@ const draw = () => {
         name: prize.name,
         probability: prize.probability
       });
+      count.value++; //點擊次數增加
       // 將抽中的獎品添加到歷史記錄中,
       // .push加在後面,則.unshift是在前面增加
       break;
     }
   }
-  count.value++; //點擊次數增加
 };
 
 // 清空紀錄
