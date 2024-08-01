@@ -5,16 +5,8 @@ import { reactive } from 'vue';
 
 const FooterItem: Type.FooterItem[] = reactive([
     {
-        name: "DC",
-        route: "",
-    },
-    {
-        name: "LINE",
-        route: "",
-    },
-    {
-        name: "YT",
-        route: "",
+        name: "Discord",
+        route: "https://discord.gg/yJJjjbV3VX",
     },
 ]);
 </script>
@@ -25,7 +17,9 @@ const FooterItem: Type.FooterItem[] = reactive([
         <!-- nav -->
         <div class="flex justify-center items-center">
             <ul class="flex gap-x-6">
-                <li class="hover:text-[#125627]" v-for="Items in FooterItem" :key="(Items as any)">{{ Items.name }}</li>
+                <li class="hover:text-[#125627]" v-for="Items in FooterItem" :key="(Items as any)">
+                    <a :href="Items.route" class="hover:text-[#125627]" target="_blank">{{ Items.name }}</a>
+                </li>
             </ul>
         </div>
 

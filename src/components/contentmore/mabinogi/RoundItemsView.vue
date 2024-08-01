@@ -140,17 +140,21 @@ const calculateTotalProbability = () => {
   <!-- 選擇 -->
   <section class="flex flex-wrap justify-center gap-2 p-2">
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('霓虹暗忍箱子')">
+      <img src="@/assets/image/box/霓虹暗忍.png" alt="">
+    </div>
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('陰陽之神箱子')">
       <img src="@/assets/image/box/陰陽之神.png" alt="">
     </div>
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+    <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('蔚藍海洋水手箱子')">
       <img src="@/assets/image/box/蔚藍海洋.png" alt="">
-    </div>
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+    </div> -->
+    <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('偶像星辰箱子')">
       <img src="@/assets/image/box/偶像星辰.png" alt="">
-    </div>
+    </div> -->
   </section>
 
 
