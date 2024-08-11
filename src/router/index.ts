@@ -11,6 +11,7 @@ import CapyBaby from "../components/content/CapyBaby.vue";
 import AboutView from "../components/content/AboutView.vue";
 import MabinogiView from "../components/content/MabinogiView.vue";
 import LoginView from "../components/content/LoginView.vue";
+import MemberView from "../components/content/MemberView.vue";
 import { useStore } from "../stores/stores";
 
 import { watch } from "vue";
@@ -40,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "login",
         path: "login",
         component: LoginView,
+      },
+      {
+        name: "member",
+        path: "member",
+        component: MemberView,
       },
     ],
   }];

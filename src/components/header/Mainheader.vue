@@ -27,13 +27,13 @@ const MenuItems: Type.MenuItem[] = reactive([
     },
     {
         page: 3,
-        name: "Login",
-        route: "login",
+        name: "Mabinogi",
+        route: "mabinogi",
     },
     {
         page: 4,
-        name: "Mabinogi",
-        route: "mabinogi",
+        name: "Login",
+        route: "login",
     },
 ]);
 
