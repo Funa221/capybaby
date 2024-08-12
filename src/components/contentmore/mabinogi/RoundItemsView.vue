@@ -144,13 +144,13 @@ const calculateTotalProbability = () => {
       <img src="@/assets/image/box/霓虹暗忍.png" alt="">
     </div>
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('陰陽之神箱子')">
-      <img src="@/assets/image/box/陰陽之神.png" alt="">
+      @click="selectdraw('日月之神箱子')">
+      <img src="@/assets/image/box/日月之神.png" alt="">
     </div>
-    <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('蔚藍海洋水手箱子')">
       <img src="@/assets/image/box/蔚藍海洋.png" alt="">
-    </div> -->
+    </div>
     <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('偶像星辰箱子')">
       <img src="@/assets/image/box/偶像星辰.png" alt="">

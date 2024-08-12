@@ -4,6 +4,8 @@ import { useStore } from '../../stores/stores.ts'
 
 import { reactive } from 'vue';
 
+import MemberListView from '../contentmore/member/MemberListView.vue'
+
 const SideItems: Type.SideItems[] = reactive([
     {
         name: "個人資訊",
@@ -41,7 +43,8 @@ const openSideBarNum = (index: number) => {
 
             <!-- 左邊內容顯示 -->
             <div class="grid col-span-12 md:col-span-6 md:col-start-4 bg-[#ffffff] text-center rounded-[20px]">
-                小模板放置
+                <MemberListView v-if="SideBar.SelectedPage == 1">
+                </MemberListView>
             </div>
             
             <!-- 右內容顯示 -->
