@@ -25,9 +25,8 @@
                     <span class="text-[14px] "></span>
                 </div>
                 <ul class="list-decimal text-[18px] text-[#313334] p-3">
-                    <li>登入無作用</li>
                     <li>樣式未來會改</li>
-                    <li>還有很多功能想法還沒實現</li>
+                    <li>有很多功能想法還沒實現</li>
                     <li>意見提供、聊天Discord群：
                         <ul>
                             <li>

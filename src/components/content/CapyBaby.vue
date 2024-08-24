@@ -14,7 +14,8 @@
 
         <div class="grid grid-cols-12 p-5">
 
-            <div class="lg:col-span-6 col-span-12 p-5 text-[20px] text-center flex justify-center items-center text-[#123456]">
+            <div
+                class="lg:col-span-6 col-span-12 p-5 text-[20px] text-center flex justify-center items-center text-[#123456]">
                 <div class="">
                     <p>探索生活的無限可能，一杯咖啡、一本書，一刻美好的寧静。</p><br />
                     <p>與我們一同體驗這個美妙的世界吧，每個瞬間都值得珍惜。</p><br />
@@ -30,7 +31,7 @@
             </div>
             <div class="lg:col-span-6 col-span-12 p-5 text-center flex justify-center items-center">
                 <div class="md:h-[80%] md:w-[80%] h-[90%] w-[90%]">
-                    <img src="@/assets/Image/zoo/IMG_7346.jpg" alt="">
+                    <img class="w-full h-full object-contain" src="@/assets/Image/zoo/IMG_7346.jpg" alt="">
                 </div>
             </div>
         </div>

@@ -46,9 +46,10 @@ const openSideBarNum = (index: number) => {
                 <MemberListView v-if="SideBar.SelectedPage == 1">
                 </MemberListView>
             </div>
-            
+
             <!-- 右內容顯示 -->
-            <div class="md:grid md:col-span-2 flex justify-between md:justify-center items-center md:h-[200px] m-3 gap-5">
+            <div
+                class="md:grid md:col-span-2 flex justify-between md:justify-center items-center md:h-[200px] m-3 gap-5">
                 <button
                     class="bg-[#ffffff] hover:bg-[#cbd1cb] text-[#403426] text-center rounded-[20px] p-3 text-[16px] lg:text-[18px] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)]"
                     v-for="(item, index) in SideItems" :key="(SideItems as any)" @click="openSideBarNum(index + 1)">
@@ -58,8 +59,19 @@ const openSideBarNum = (index: number) => {
 
         </div>
 
-
     </section>
+
+    <section class="flex justify-center items-center">
+        <div>
+            <div class="text-center">
+                C-CLAYS-宝相華
+            </div>
+            <audio controls>
+                <source src="@/assets\music\C-CLAYS-宝相華.mp3" type="audio/ogg; codecs=opus" />
+            </audio>
+        </div>
+    </section>
+    
 </template>
 
 <style scoped></style>

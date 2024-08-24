@@ -12,7 +12,8 @@ const FooterItem: Type.FooterItem[] = reactive([
 </script>
 
 <template>
-    <footer class="h-[calc((100vh-74vh)/2)] w-full border-y text-[#787878] flex justify-center items-center bg-slate-50">
+    <footer
+        class="h-[calc((100vh-74vh)/2)] w-full border-y text-[#787878] flex justify-center items-center bg-slate-50">
 
         <!-- nav -->
         <div class="flex justify-center items-center">

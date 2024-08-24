@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
+import { useStore } from '@/stores/stores';
 
 // 動態導入所有 JSON 檔案
 const jsonModules = import.meta.glob('../../../assets/JSON/*.json');
@@ -8,9 +9,11 @@ const selectedPrize = ref<any>('先點圖片！再點按我！');
 const Probability = ref<number>();//機率
 const Itemslevel = ref<string>('');//獎品等級
 const count = ref<number>(0);//點擊次數
+const ItemsContent = ref<any>([]);
 const prizeHistory = ref<any>([]);//陣列，點擊紀錄
 const currentPrizes = ref<{ level: string; name: string; probability: number }[]>([]);
 const totalProbabilityByLevel = ref({});
+const useStatus = useStore();
 
 // 紀錄獎數量
 const SlotteryCount = computed(() => {
@@ -33,6 +36,7 @@ const loadPrizes = async (fileName: any) => {
     try {
       const module = await jsonModules[path]() as { default: { level: string; name: string; probability: number }[] };
       const prizes = module.default;
+      ItemsContent.value = prizes;
       return prizes;
     } catch (error) {
       console.error(`Error loading JSON file ${fileName}.json:`, error);
@@ -110,6 +114,16 @@ const calculateTotalProbability = () => {
   return totalProbability;
 };
 
+const openItemsContent = () => {
+  useStatus.isItemOpen = !useStatus.isItemOpen;
+};
+
+// 開關菜單取消滑動
+watch(() => useStatus.isItemOpen, (newVal) => {
+  document.body.classList.toggle('overflow-hidden', newVal);
+  document.body.classList.toggle('overflow-auto', !newVal);
+});
+
 </script>
 
 <style>
@@ -170,9 +184,9 @@ const calculateTotalProbability = () => {
           class="text-center text-[18px] lg:text-[20px] p-1 w-[20%] lg:w-[13%] rounded-[13px] bg-[#f3c0c0] hover:bg-[#dab8b8] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
           @click="draw()">按我</button>
 
-        <!-- <button
+        <button
           class="text-center p-2 w-[20%] lg:w-[13%] rounded-[13px] bg-[#c0f3ce] hover:bg-[#b8dac1] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
-          @click="draw()">內容</button> -->
+          @click="openItemsContent()">內容</button>
       </div>
 
       <div class="p-3 text-[16px]">
@@ -239,6 +253,54 @@ const calculateTotalProbability = () => {
         </table>
       </div>
     </div>
+  </section>
+
+  <!-- 抽獎項目內容 -->
+  <section class=" p-3 absolute top-0 left-0 h-full w-full bg-[#00000095]"
+    v-show="useStatus.isItemOpen">
+
+    <!-- 視窗容器 -->
+    <div class="relative flex justify-center items-center h-[800px] w-full">
+
+      <!-- X 按鈕 -->
+      <button class="absolute top-10 right-16 hover:text-[#125627] text-[#5f5f5f] bg-white rounded-full p-2"
+        @click="openItemsContent()">
+        <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+      </button>
+
+      <div class="w-[80%] max-h-[75%] overflow-y-auto bg-white rounded-[25px] p-3">
+        <div v-if="ItemsContent.length > 0">
+          <table class="table-auto w-full border-collapse border-[#123456] mt-2">
+            <thead>
+              <tr class="text-[#222222]">
+                <th class="border border-slate-300 w-1/6">等級</th>
+                <th class="border border-slate-300 w-1/2">名稱</th>
+                <th class="border border-slate-300 w-1/6">機率</th>
+              </tr>
+            </thead>
+            <tr class=" text-[#555555] text-[13px] md:text-[16px]" v-for="(ContentItems, index) in ItemsContent"
+              :key="index">
+              <!-- 獎品等級 -->
+              <td class="border border-slate-300  p-1">{{ ContentItems.level }}</td>
+              <!-- 獎品名稱 -->
+              <td class="border border-slate-300">{{ ContentItems.name }}
+              </td>
+              <!-- 獎品機率 -->
+              <td class="border border-slate-300">{{ ContentItems.probability.toFixed(4) }}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div v-else>
+          <div>尚未選擇轉蛋箱子</div>
+        </div>
+
+      </div>
+    </div>
+
   </section>
 
 </template>
