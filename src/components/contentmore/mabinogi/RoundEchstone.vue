@@ -260,11 +260,11 @@ watch(() => useStatus.isEchstoneOpen, (newVal) => {
 
       <div class="flex justify-center gap-4">
         <button
-          class="text-center text-[18px] lg:text-[20px] p-1 w-[20%] lg:w-[13%] rounded-[13px] bg-[#f3c0c0] hover:bg-[#dab8b8] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
+          class="text-center text-[18px] lg:text-[20px] p-2 w-[20%] lg:w-[13%] rounded-[13px] bg-[#f3c0c0] hover:bg-[#dab8b8] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
           @click="draw()">按我</button>
 
         <button
-          class="text-center p-2 w-[20%] lg:w-[13%] rounded-[13px] bg-[#c0f3ce] hover:bg-[#b8dac1] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
+          class="text-center text-[18px] lg:text-[20px] p-2 w-[20%] lg:w-[13%] rounded-[13px] bg-[#c0f3ce] hover:bg-[#b8dac1] shadow-[4px_4px_1px_-1px_rgba(0,0,0,1)] text-[#2e2a3f]"
           @click="openItemsContent()">內容</button>
       </div>
 
@@ -318,13 +318,13 @@ watch(() => useStatus.isEchstoneOpen, (newVal) => {
 
 
   <!-- 抽獎項目內容 -->
-  <section class=" p-3 absolute top-0 left-0 h-full w-full bg-[#00000095]" v-show="useStatus.isEchstoneOpen">
+  <section class=" p-3 fixed  top-0 left-0 h-full w-full bg-[#00000095]" v-show="useStatus.isEchstoneOpen">
 
     <!-- 視窗容器 -->
-    <div class="relative flex justify-center items-center h-[800px] w-full">
+    <div class="relative flex justify-center items-center h-[95%] w-full">
 
       <!-- X 按鈕 -->
-      <button class="absolute top-10 right-16 hover:text-[#125627] text-[#5f5f5f] bg-white rounded-full p-2"
+      <button class="absolute top-[5%] right-[10%] lg:right-[20%] hover:text-[#125627] text-[#5f5f5f] bg-white rounded-full p-2"
         @click="openItemsContent()">
         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
           stroke="currentColor">
@@ -332,11 +332,11 @@ watch(() => useStatus.isEchstoneOpen, (newVal) => {
         </svg>
       </button>
 
-      <div class="w-[80%] max-h-[75%] overflow-y-auto bg-white rounded-[25px] p-3">
+      <div class="w-[80%] lg:w-[50%] max-h-[70%] overflow-y-auto bg-white rounded-[25px] p-3">
         <div v-if="ItemsContent.length > 0">
           <table class="table-auto w-full border-collapse border-[#123456] mt-2">
             <thead>
-              <tr class="text-[#222222]">
+              <tr class="text-[#222222] text-[16px] md:text-[18px]">
                 <th class="border border-slate-300 w-1/6">等級</th>
                 <th class="border border-slate-300 w-1/2">名稱</th>
                 <th class="border border-slate-300 w-1/6">機率</th>
