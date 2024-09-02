@@ -61,7 +61,7 @@ const openSideBarNum = (index: number) => {
 
     </section>
 
-    <section class="flex justify-center items-center">
+    <!-- <section class="flex justify-center items-center">
         <div>
             <div class="text-center">
                 C-CLAYS-宝相華
@@ -70,7 +70,7 @@ const openSideBarNum = (index: number) => {
                 <source src="@/assets\music\C-CLAYS-宝相華.mp3" type="audio/ogg; codecs=opus" />
             </audio>
         </div>
-    </section>
+    </section> -->
     
 </template>
 
