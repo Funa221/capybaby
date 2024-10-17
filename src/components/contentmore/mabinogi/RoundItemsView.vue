@@ -154,6 +154,10 @@ watch(() => useStatus.isItemOpen, (newVal) => {
   <!-- 選擇 -->
   <section class="flex flex-wrap justify-center gap-2 p-2">
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('世界流浪者箱子')">
+      <img src="@/assets/image/box/世界流浪者.png" alt="">
+    </div>
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('蝴蝶妖精箱子')">
       <img src="@/assets/image/box/蝴蝶妖精.png" alt="">
     </div>
