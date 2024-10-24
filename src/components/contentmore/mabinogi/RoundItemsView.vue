@@ -15,6 +15,41 @@ const currentPrizes = ref<{ level: string; name: string; probability: number }[]
 const totalProbabilityByLevel = ref({});
 const useStatus = useStore();
 
+const currentPage = ref(1); //PAGE
+const itemsPerPage = ref(20);
+const maxVisiblePages = ref(5);
+
+const paginatedPrizeHistory = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return prizeHistory.value.slice(start, end);
+});
+
+const totalPages = computed(() => {
+  return Math.ceil(prizeHistory.value.length / itemsPerPage.value);
+});
+
+const changePage = (page: number) => {
+  currentPage.value = page;
+};
+
+const visiblePages = computed(() => {
+  const half = Math.floor(maxVisiblePages.value / 2);
+  let start = currentPage.value - half;
+  let end = currentPage.value + half;
+
+  if (start < 1) {
+    start = 1;
+    end = Math.min(maxVisiblePages.value, totalPages.value);
+  }
+  if (end > totalPages.value) {
+    start = Math.max(totalPages.value - maxVisiblePages.value + 1, 1);
+    end = totalPages.value;
+  }
+  return Array.from({ length: end - start + 1 }, (_, i) => i + start);
+});
+
+
 // 紀錄獎數量
 const SlotteryCount = computed(() => {
   return prizeHistory.value.filter((prize: { level: string; }) => prize.level === 'S').length;
@@ -100,7 +135,8 @@ const draw = () => {
 
 // 清空紀錄
 const clearlog = () => {
-  prizeHistory.value.length = 0;
+  prizeHistory.value.length = 0; //歷史紀錄陣列清空
+  currentPage.value = 1; // 重設頁碼
   count.value = 0;
   selectedPrize.value = '清除記錄了！';
 };
@@ -154,6 +190,10 @@ watch(() => useStatus.isItemOpen, (newVal) => {
   <!-- 選擇 -->
   <section class="flex flex-wrap justify-center gap-2 p-2">
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('被遺忘的墳墓-一般')">
+      <img src="@/assets/image/box/被遺忘的墳墓.png" alt="">
+    </div>
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('世界流浪者箱子')">
       <img src="@/assets/image/box/世界流浪者.png" alt="">
     </div>
@@ -165,22 +205,22 @@ watch(() => useStatus.isItemOpen, (newVal) => {
       @click="selectdraw('天界聖域箱子')">
       <img src="@/assets/image/box/天界聖域.png" alt="">
     </div>
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+    <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('貴族假期箱子')">
       <img src="@/assets/image/box/貴族假期.png" alt="">
-    </div>
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+    </div> -->
+    <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('霓虹暗忍箱子')">
       <img src="@/assets/image/box/霓虹暗忍.png" alt="">
-    </div>
+    </div> -->
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('日月之神箱子')">
       <img src="@/assets/image/box/日月之神.png" alt="">
     </div>
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+    <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('蔚藍海洋水手箱子')">
       <img src="@/assets/image/box/蔚藍海洋.png" alt="">
-    </div>
+    </div> -->
     <!-- <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
       @click="selectdraw('偶像星辰箱子')">
       <img src="@/assets/image/box/偶像星辰.png" alt="">
@@ -245,41 +285,48 @@ watch(() => useStatus.isItemOpen, (newVal) => {
           </thead>
 
           <!--  -->
-          <tr class=" text-[#555555]" v-for="(prizeItems, index) in prizeHistory" :key="index">
-            <!-- 獎品等級 -->
-            <td :class="{
-        'rainbow': prizeItems.level === 'S',
-        'text-[#ea67f4]': prizeItems.level === 'A',
-        'text-[#54b16e]': prizeItems.level === 'B',
-        'text-[#867d7d]': prizeItems.level === 'C'
-      }" class="border border-slate-300  p-1">{{
-        prizeItems.level
-      }}</td>
-            <!-- 獎品名稱 -->
-            <td :class="{
-          'rainbow font-bold': prizeItems.level === 'S',
-          'text-[#ea67f4]': prizeItems.level === 'A',
-          'text-[#54b16e]': prizeItems.level === 'B',
-          'text-[#867d7d]': prizeItems.level === 'C'
-        }" class="border border-slate-300">{{ prizeItems.name }}
-            </td>
-            <!-- 獎品機率 -->
-            <td class="border border-slate-300">{{ prizeItems.probability.toFixed(4) }}</td>
-          </tr>
+          <tbody>
+            <tr v-for="(prizeItems, index) in paginatedPrizeHistory" :key="index">
+              <td
+                :class="{ 'rainbow': prizeItems.level === 'S', 'text-[#ea67f4]': prizeItems.level === 'A', 'text-[#54b16e]': prizeItems.level === 'B', 'text-[#867d7d]': prizeItems.level === 'C' }"
+                class="border border-slate-300 p-1">{{ prizeItems.level }}</td>
+              <td
+                :class="{ 'rainbow font-bold': prizeItems.level === 'S', 'text-[#ea67f4]': prizeItems.level === 'A', 'text-[#54b16e]': prizeItems.level === 'B', 'text-[#867d7d]': prizeItems.level === 'C' }"
+                class="border border-slate-300">{{ prizeItems.name }}</td>
+              <td class="border border-slate-300">{{ prizeItems.probability.toFixed(4) }}</td>
+            </tr>
+          </tbody>
         </table>
+      </div>
+
+
+      <div class="flex justify-center mt-4" v-if="totalPages > 1">
+        <button @click="changePage(currentPage - 1)" :disabled="currentPage === 1"
+          class="px-3 py-1 mx-1 rounded bg-gray-200" :class="{ 'bg-gray-500 text-white': currentPage !== 1 }">
+          &lt;
+        </button>
+        <button v-for="page in visiblePages" :key="page" @click="changePage(page)"
+          :class="{ 'bg-blue-500 text-white': currentPage === page, 'bg-gray-200': currentPage !== page }"
+          class="px-3 py-1 mx-1 rounded">
+          {{ page }}
+        </button>
+        <button @click="changePage(currentPage + 1)" :disabled="currentPage === totalPages"
+          class="px-3 py-1 mx-1 rounded bg-gray-200" :class="{ 'bg-gray-500 text-white': currentPage !== totalPages }">
+          &gt;
+        </button>
       </div>
     </div>
   </section>
 
   <!-- 抽獎項目內容 -->
-  <section class="p-3 fixed top-0 left-0 h-full w-full bg-[#00000095]"
-    v-show="useStatus.isItemOpen">
+  <section class="p-3 fixed top-0 left-0 h-full w-full bg-[#00000095]" v-show="useStatus.isItemOpen">
 
     <!-- 視窗容器 -->
     <div class="relative flex justify-center items-center h-[95%] w-full">
 
       <!-- X 按鈕 -->
-      <button class="absolute top-[5%] right-[10%] lg:right-[20%] hover:text-[#125627] text-[#5f5f5f] bg-white rounded-full p-2"
+      <button
+        class="absolute top-[5%] right-[10%] lg:right-[20%] hover:text-[#125627] text-[#5f5f5f] bg-white rounded-full p-2"
         @click="openItemsContent()">
         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
           stroke="currentColor">
