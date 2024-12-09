@@ -95,10 +95,10 @@ const selectdraw = async (selection: any) => {
     if (!probabilityByLevel[prize.level]) {
       probabilityByLevel[prize.level] = 0;
     }
-    // 将每个概率四舍五入到四位小数，并转换为字符串输出
+    // 將每個機率四捨五入到四位小數，並轉換為字串輸出
     probabilityByLevel[prize.level] += Number(prize.probability.toFixed(4));
   }
-  // 将结果转换为四位小数的字符串
+  // 將結果轉換為四位小數的字串
   for (let level in probabilityByLevel) {
     probabilityByLevel[level] = probabilityByLevel[level].toFixed(4);
   }
