@@ -1,9 +1,9 @@
-<script setup>
-import { useStore } from 'vuex';
+<script setup lang="ts">
+import { useSuccessAlertStore } from '@/stores/successAlert';
 import { computed } from 'vue';
 
-const store = useStore();
-const successTips = computed(() => store.state.successAlert.tips);
+const successAlertStore = useSuccessAlertStore();
+const successTips = computed(() => successAlertStore.tips);
 </script>
 
 <template>

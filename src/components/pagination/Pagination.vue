@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 import { computed, ref } from "vue";
 
 export default {
@@ -44,7 +44,7 @@ export default {
       return Array.from({ length: end - start + 1 }, (_, i) => i + start);
     });
 
-    const changePage = (page) => {
+    const changePage = (page: any) => {
       if (page >= 1 && page <= totalPages.value) {
         currentPage.value = page;
         emit("update:modelValue", page);

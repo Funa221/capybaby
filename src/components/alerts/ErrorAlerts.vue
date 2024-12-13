@@ -1,24 +1,10 @@
-<script setup>
-import { useStore } from 'vuex';
+<script setup lang="ts">
+import { useErrorAlertStore } from '@/stores/errorAlert';
 import { computed } from 'vue';
 
-const store = useStore();
-const tips = computed(() => store.getters['errorAlert/tips']);
+const errorAlertStore = useErrorAlertStore()
+const tips = computed<{ id: string; msg: string }[]>(() => errorAlertStore.tips);
 </script>
-
-<style>
-.list-move,
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s ease;
-}
-
-.list-enter-from,
-.list-leave-to {
-  opacity: 0;
-  transform: translateY(-30px);
-}
-</style>
 
 <template>
   <div class="ErrorAlerts fixed w-[80%] lg:w-[20%] top-[280px] left-1/2 -translate-x-1/2 z-[999]">
@@ -40,3 +26,17 @@ const tips = computed(() => store.getters['errorAlert/tips']);
     </transition-group>
   </div>
 </template>
+
+<style scoped>
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
+}
+</style>

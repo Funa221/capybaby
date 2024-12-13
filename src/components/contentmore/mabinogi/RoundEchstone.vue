@@ -208,27 +208,27 @@ watch(() => useStatus.isEchstoneOpen, (newVal) => {
   <!-- 選擇 -->
   <section class="flex flex-wrap justify-center gap-2 mt-5">
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('藍色回音石')">
-      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/藍色回音石.png" alt="">
+      @click="selectdraw('BlusEch')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/BlusEch.png" alt="">
     </div>
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('紅色回音石')">
-      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/紅色回音石.png" alt="">
-    </div>
-
-    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('黃色回音石')">
-      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/黃色回音石.png" alt="">
+      @click="selectdraw('RedEch')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/RedEch.png" alt="">
     </div>
 
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('銀色回音石')">
-      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/銀色回音石.png" alt="">
+      @click="selectdraw('YellowEch')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/YellowEch.png" alt="">
     </div>
 
     <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
-      @click="selectdraw('黑色回音石')">
-      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/黑色回音石.png" alt="">
+      @click="selectdraw('SilverEch')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/SilverEch.png" alt="">
+    </div>
+
+    <div class="w-1/4 lg:w-1/6 flex justify-center items-center rounded-[10px] hover:bg-[#f4f4f4]"
+      @click="selectdraw('darkEch')">
+      <img class="w-[50px] h-[50px]" src="@/assets/image/echostone/darkEch.png" alt="">
     </div>
 
 
@@ -301,15 +301,15 @@ watch(() => useStatus.isEchstoneOpen, (newVal) => {
           <tr class=" text-[#555555]" v-for="(prizeItems, index) in prizeHistory" :key="index">
             <!-- 獎品名稱 -->
             <td :class="{
-        'rainbow font-bold': prizeItems.isHighestLevel,
-      }" class="border border-slate-300">{{ prizeItems.name }}
+              'rainbow font-bold': prizeItems.isHighestLevel,
+            }" class="border border-slate-300">{{ prizeItems.name }}
             </td>
             <!-- 獎品等級 -->
             <td :class="{
-        'rainbow': prizeItems.isHighestLevel,
-      }" class="border border-slate-300  p-1">{{
+              'rainbow': prizeItems.isHighestLevel,
+            }" class="border border-slate-300  p-1">{{
         prizeItems.level
-      }}</td>
+              }}</td>
           </tr>
         </table>
       </div>
@@ -324,7 +324,8 @@ watch(() => useStatus.isEchstoneOpen, (newVal) => {
     <div class="relative flex justify-center items-center h-[95%] w-full">
 
       <!-- X 按鈕 -->
-      <button class="absolute top-[5%] right-[10%] lg:right-[20%] hover:text-[#125627] text-[#5f5f5f] bg-white rounded-full p-2"
+      <button
+        class="absolute top-[5%] right-[10%] lg:right-[20%] hover:text-[#125627] text-[#5f5f5f] bg-white rounded-full p-2"
         @click="openItemsContent()">
         <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
           stroke="currentColor">

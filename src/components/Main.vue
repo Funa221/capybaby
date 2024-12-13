@@ -2,7 +2,10 @@
 import { RouterView } from "vue-router";
 import Mainheader from './header/Mainheader.vue';
 import Mainfooter from './footer/Mainfooter.vue';
-
+import ErrorAlerts from './alerts/ErrorAlerts.vue';
+import SuccessAlerts from "./alerts/SuccessAlerts.vue";
+import LoadingAlerts from "./alerts/LoadingAlerts.vue";
+import MessagesAlerts from "./alerts/MessagesAlerts.vue";
 </script>
 
 <template>
@@ -12,6 +15,12 @@ import Mainfooter from './footer/Mainfooter.vue';
     <RouterView />
     <Mainfooter />
   </div>
+
+  <ErrorAlerts />
+  <SuccessAlerts />
+  <LoadingAlerts />
+  <MessagesAlerts />
+
 </template>
 
 <style scoped></style>

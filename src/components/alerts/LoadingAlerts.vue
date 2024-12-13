@@ -1,9 +1,9 @@
-<script setup>
-import { useStore } from 'vuex';
+<script setup lang="ts">
+import { useLoadingAlertStore } from '@/stores/loadingAlert';
 import { computed } from 'vue';
 
-const store = useStore();
-const isLoading = computed(() => store.state.loadingAlert.isLoading);
+const LoadingAlertStore = useLoadingAlertStore();
+const isLoading = computed(() => LoadingAlertStore.isLoading);
 </script>
 
 <template>
