@@ -46,7 +46,7 @@ watch(() => SideBar.isMenuOpen, (newVal) => {
 </script>
 
 <template>
-    <header class="lg:h-[80px] h-[50px] w-full border-y text-[#787878] grid grid-cols-12 bg-slate-50">
+    <header class="lg:h-[80px] h-[50px] w-full border-y text-[#787878] grid grid-cols-12 bg-slate-50 z-[995]">
         <!-- logo -->
         <div class="grid col-span-4 justify-center items-center">
             <a class="flex justify-center items-center hover:text-[#125627] p-3">
@@ -74,7 +74,7 @@ watch(() => SideBar.isMenuOpen, (newVal) => {
     </header>
 
     <!-- nav app -->
-    <div class="fixed top-0 left-0 h-full w-full flex justify-center items-center lg:hidden"
+    <div class="fixed top-0 left-0 h-full w-full flex justify-center items-center lg:hidden z-[999]"
         v-show="SideBar.isMenuOpen">
         <div class="absolute top-0 left-0 h-full w-full bg-slate-50 backdrop-blur-md bg-opacity-75"></div>
         <!-- X -->
@@ -88,7 +88,8 @@ watch(() => SideBar.isMenuOpen, (newVal) => {
         <!--  -->
         <ul class="text-center z-10">
             <li class="p-2" v-for="Items in MenuItems" :key="(Items as any)">
-                <router-link class="hover:text-[#125627] text-[#5f5f5f] text-[18px] font-bold p-2" :to="Items.route" @click.native="isMenuX">{{ Items.name }}</router-link>
+                <router-link class="hover:text-[#125627] text-[#5f5f5f] text-[18px] font-bold p-2" :to="Items.route"
+                    @click.native="isMenuX">{{ Items.name }}</router-link>
             </li>
             <li class="hover:text-[#125627] mt-3"></li>
         </ul>
