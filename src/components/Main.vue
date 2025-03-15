@@ -16,6 +16,7 @@ import MessagesAlerts from "./alerts/MessagesAlerts.vue";
     <Mainfooter />
   </div>
 
+  <!-- 自訂警報視窗 -->
   <ErrorAlerts />
   <SuccessAlerts />
   <LoadingAlerts />
