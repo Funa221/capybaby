@@ -55,40 +55,6 @@ const routes: Array<RouteRecordRaw> = [
     ],
   }];
 
-// const router = createRouter({
-//   // history: createWebHistory(import.meta.env.BASE_URL),
-//   history: createWebHistory(),
-//   routes: [
-//     {
-//       path: "/",
-//       name: "main",
-//       component: HomeView,
-//       children: [
-//         {
-//           name: "home",
-//           path: "home",
-//           component: CapyBaby,
-//         },
-//         {
-//           name: "about",
-//           path: "about",
-//           component: AboutView,
-//         },
-//         {
-//           name: "mabinogi",
-//           path: "mabinogi",
-//           component: MabinogiView,
-//         },
-//         {
-//           name: "starrail",
-//           path: "starrail",
-//           component: StarRailView,
-//         },
-//       ]
-//     },
-//   ]
-// });
-
 const router = createRouter({
     history: createWebHashHistory(),
     routes,
